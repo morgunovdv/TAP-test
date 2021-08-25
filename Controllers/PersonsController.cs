@@ -11,23 +11,23 @@ namespace TAP_test.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeopleController : ControllerBase
+    public class PersonsController : ControllerBase
     {
         private readonly Context _context;
 
-        public PeopleController(Context context)
+        public PersonsController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/People
+        // GET: api/Persons
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
         {
             return await _context.Persons.ToListAsync();
         }
 
-        // GET: api/People/5
+        // GET: api/Persons/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson(long id)
         {
@@ -41,7 +41,7 @@ namespace TAP_test.Controllers
             return person;
         }
 
-        // PUT: api/People/5
+        // PUT: api/Persons/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPerson(long id, Person person)
@@ -72,7 +72,7 @@ namespace TAP_test.Controllers
             return NoContent();
         }
 
-        // POST: api/People
+        // POST: api/Persons
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
@@ -83,7 +83,7 @@ namespace TAP_test.Controllers
             return CreatedAtAction("GetPerson", new { id = person.Id }, person);
         }
 
-        // DELETE: api/People/5
+        // DELETE: api/Persons/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePerson(long id)
         {
