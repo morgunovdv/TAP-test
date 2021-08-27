@@ -9,15 +9,15 @@ using TAP_test.Models;
 namespace TAP_test.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210825125610_Initial")]
-    partial class Initial
+    [Migration("20210827083038_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TAP_test.Models.Person", b =>
