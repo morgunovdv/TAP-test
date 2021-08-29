@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TAP_test.Models;
 
-namespace TAP_test.Controllers
+namespace TAP_test.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
     {
@@ -20,14 +20,14 @@ namespace TAP_test.Controllers
             _context = context;
         }
 
-        // GET: api/Persons
+        // GET: api/v1/Persons
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
         {
             return await _context.Persons.ToListAsync();
         }
 
-        // GET: api/Persons/5
+        // GET: api/v1/Persons/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson(long id)
         {
@@ -41,7 +41,7 @@ namespace TAP_test.Controllers
             return person;
         }
 
-        // PUT: api/Persons/5
+        // PUT: api/v1/Persons/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPerson(long id, Person person)
@@ -72,7 +72,7 @@ namespace TAP_test.Controllers
             return NoContent();
         }
 
-        // POST: api/Persons
+        // POST: api/v1/Persons
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
@@ -83,7 +83,7 @@ namespace TAP_test.Controllers
             return CreatedAtAction("GetPerson", new { id = person.Id }, person);
         }
 
-        // DELETE: api/Persons/5
+        // DELETE: api/v1/Persons/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePerson(long id)
         {

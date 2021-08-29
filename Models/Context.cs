@@ -10,5 +10,12 @@ namespace TAP_test.Models
         }
 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Person>()
+        //        .HasNoKey();
+        //}
     }
 }
