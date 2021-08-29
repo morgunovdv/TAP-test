@@ -1,17 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TAP_test.Models
 {
-    [NotMapped]
-    [Keyless]
     public class Skill
-    {
+    { 
+        public long Id { get; set; }
         public string Name { get; set; }
-        public byte Level { get; set; } //написать ограничения по левелу 1-10
+        [Range(1,10)]
+        public byte Level { get; set; }
+        public long PersonId { get; set; }
     }
 }

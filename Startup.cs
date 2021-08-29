@@ -22,7 +22,6 @@ namespace TAP_test
         {
             services.AddControllers();
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration["ConnectionStrings:DbConnect"]));
-            System.Console.WriteLine(Configuration["ConnectionStrings:DbConnect"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

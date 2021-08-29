@@ -14,8 +14,9 @@ namespace TAP_test.Models
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
-        //    modelBuilder.Entity<Person>()
-        //        .HasNoKey();
+        //    modelBuilder.Entity<Skill>()
+        //        .HasOne(p => p.Person).WithMany(p => p.Skills);
+                
         //}
     }
 }
