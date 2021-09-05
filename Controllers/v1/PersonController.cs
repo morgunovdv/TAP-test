@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TAP_test.Models;
+using System.Collections.Generic;
 
 namespace TAP_test.Controllers.v1
 {
@@ -21,7 +22,9 @@ namespace TAP_test.Controllers.v1
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson(long id)
         {
-            var person = await _context.Persons.Include(x => x.Skills).FirstOrDefaultAsync(x => x.Id == id);
+            var person = await _context.Persons
+                                    .Include(x => x.Skills)
+                                    .FirstOrDefaultAsync(x => x.Id == id);
 
 
             if (person == null)
@@ -35,12 +38,45 @@ namespace TAP_test.Controllers.v1
         // PUT: api/v1/Person/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(long id, Person person)
+        public async Task<IActionResult> PutPerson(long id, Person person, Skill skill)
         {
             if (id != person.Id)
             {
-                return BadRequest();
+                person.Id = id;
             }
+
+
+            if(person.Skills != null)
+            {
+                foreach (Skill skill1 in person.Skills)
+                {
+                    if (skill1 == skill)
+                    {
+                        if (skill1.Level != skill.Level)
+                        {
+                            skill1.Level = skill.Level;
+                        }
+
+                        else 
+                        {
+                            skill1.Level = skill1.Level;
+                        } 
+                    }
+
+                    else
+                    {
+                        person.Skills.Add(skill);
+                    }
+                }
+                
+                
+            }
+
+            else
+            {
+                person.Skills.Add(skill);
+            }
+
 
             _context.Entry(person).State = EntityState.Modified;
 
