@@ -11,6 +11,61 @@ namespace TAP_test.Controllers.v1
     [ApiController]
     public class PersonController : ControllerBase
     {
+        private List<Skill> skills(List<Skill> oldSkills, List<Skill> newSkills)
+        {
+            Skill skill = new Skill();
+            for (int i = 0; i < oldSkills.Count; i++)
+            {
+                if (i != 0)
+                {
+                    for (int j = 0; j < newSkills.Count; j++)
+                    {
+                        if(oldSkills[i].Name == newSkills[j].Name)
+                        {
+                            if (oldSkills[i].Level != newSkills[j].Level)
+                            {
+                                oldSkills[i].Level = newSkills[j].Level;
+                            }
+                        }
+                        skill = newSkills[j];
+                    }
+                }
+
+                else
+                {
+                    oldSkills.Add(skill);
+                }
+            }
+
+
+            //foreach (Skill personSkill in oldSkills)
+            //{
+            //    if (oldSkills != null)
+            //    {
+            //        foreach (Skill skill in newSkills)
+            //        {
+
+            //            if (personSkill.Name == skill.Name)
+            //            {
+            //                if (personSkill.Level != skill.Level)
+            //                {
+            //                    personSkill.Level = skill.Level;
+            //                }
+            //            }
+
+            //            else
+            //            {
+            //                oldSkills.Add(skill);
+            //            }
+
+            //        }
+            //    }
+            //}
+
+            return oldSkills;
+        }   
+        
+
         private readonly Context _context;
 
         public PersonController(Context context)
@@ -38,45 +93,15 @@ namespace TAP_test.Controllers.v1
         // PUT: api/v1/Person/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(long id, Person person, Skill skill)
+        public async Task<IActionResult> PutPerson(long id, Person person)
         {
+
             if (id != person.Id)
             {
                 person.Id = id;
             }
 
-
-            if(person.Skills != null)
-            {
-                foreach (Skill skill1 in person.Skills)
-                {
-                    if (skill1 == skill)
-                    {
-                        if (skill1.Level != skill.Level)
-                        {
-                            skill1.Level = skill.Level;
-                        }
-
-                        else 
-                        {
-                            skill1.Level = skill1.Level;
-                        } 
-                    }
-
-                    else
-                    {
-                        person.Skills.Add(skill);
-                    }
-                }
-                
-                
-            }
-
-            else
-            {
-                person.Skills.Add(skill);
-            }
-
+            skills(person.Skills, person.Skills);
 
             _context.Entry(person).State = EntityState.Modified;
 
