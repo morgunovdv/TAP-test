@@ -13,58 +13,26 @@ namespace TAP_test.Controllers.v1
     {
         private List<Skill> skills(List<Skill> oldSkills, List<Skill> newSkills)
         {
-            Skill skill = new Skill();
-            for (int i = 0; i < oldSkills.Count; i++)
-            {
-                if (i != 0)
-                {
-                    for (int j = 0; j < newSkills.Count; j++)
-                    {
-                        if(oldSkills[i].Name == newSkills[j].Name)
-                        {
-                            if (oldSkills[i].Level != newSkills[j].Level)
-                            {
-                                oldSkills[i].Level = newSkills[j].Level;
-                            }
-                        }
-                        skill = newSkills[j];
-                    }
-                }
+            var test = new HashSet<Skill>(new SkillComparer());
 
-                else
-                {
-                    oldSkills.Add(skill);
-                }
+            newSkills.Reverse();
+            foreach (var skill in newSkills)
+            {
+                test.Add(skill);
+            }
+
+            oldSkills.Reverse();
+
+            foreach (var skill in oldSkills)
+            {
+                test.Add(skill);
             }
 
 
-            //foreach (Skill personSkill in oldSkills)
-            //{
-            //    if (oldSkills != null)
-            //    {
-            //        foreach (Skill skill in newSkills)
-            //        {
-
-            //            if (personSkill.Name == skill.Name)
-            //            {
-            //                if (personSkill.Level != skill.Level)
-            //                {
-            //                    personSkill.Level = skill.Level;
-            //                }
-            //            }
-
-            //            else
-            //            {
-            //                oldSkills.Add(skill);
-            //            }
-
-            //        }
-            //    }
-            //}
-
-            return oldSkills;
-        }   
-        
+            var result = test.ToList();
+            result.Reverse();
+            return result;
+        }
 
         private readonly Context _context;
 
@@ -95,15 +63,14 @@ namespace TAP_test.Controllers.v1
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPerson(long id, Person person)
         {
+            var personSkills = await _context.Persons
+                                    .Include(x => x.Skills)
+                                    .FirstOrDefaultAsync(x => x.Id == id);
+           
 
-            if (id != person.Id)
-            {
-                person.Id = id;
-            }
-
-            skills(person.Skills, person.Skills);
-
-            _context.Entry(person).State = EntityState.Modified;
+            personSkills.Name = person.Name;
+            personSkills.DisplayName = person.DisplayName;
+            personSkills.Skills = skills(personSkills.Skills, person.Skills);
 
             try
             {

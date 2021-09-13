@@ -9,7 +9,7 @@ using TAP_test.Models;
 namespace TAP_test.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210829151329_Initial")]
+    [Migration("20210912144314_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
