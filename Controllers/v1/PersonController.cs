@@ -13,24 +13,22 @@ namespace TAP_test.Controllers.v1
     {
         private List<Skill> skills(List<Skill> oldSkills, List<Skill> newSkills)
         {
-            var test = new HashSet<Skill>(new SkillComparer());
+            var result = new List<Skill>(oldSkills);
 
-            newSkills.Reverse();
-            foreach (var skill in newSkills)
+            foreach (var newSkill in newSkills)
             {
-                test.Add(skill);
+                var oldSkillIndex = oldSkills.FindIndex(x => x.Name == newSkill.Name);
+
+                if (oldSkillIndex == -1)
+                {
+                    result.Add(newSkill);
+                }
+                else
+                {
+                    result[oldSkillIndex].Level = newSkill.Level;
+                }
             }
 
-            oldSkills.Reverse();
-
-            foreach (var skill in oldSkills)
-            {
-                test.Add(skill);
-            }
-
-
-            var result = test.ToList();
-            result.Reverse();
             return result;
         }
 
